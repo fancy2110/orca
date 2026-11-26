@@ -55,21 +55,21 @@ HarmonyOS SDK and Emulator.`).
 Use `--json` for agent-driven calls. Unqualified commands target the worktree's active
 device.
 
-| Goal                   | Command                                                               | Constraint                                                                                    |
-| ---------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| List instances/targets | `ORCA emulator devices --json`                                        | Every backend's devices with a platform column, booted and shutdown.                          |
-| Attach / make active   | `ORCA emulator attach "Mate 90 Pro" --json`                           | Given a shutdown instance name, boots it first. Makes the target active for the worktree.     |
-| Single tap             | `ORCA emulator tap <x> <y> --json`                                    | Normalized 0..1 coordinates.                                                                  |
-| Swipe / gesture        | `ORCA emulator gesture '<json>' --json`                               | Sent through `uinput` between the first and last points.                                      |
-| Type text              | `ORCA emulator type "user@example.com" --json`                        | US-ASCII, needs a focused input field.                                                        |
-| Hardware button        | `ORCA emulator button back --json`                                    | `home`, `back`, `recents`, `power`, `volume_up`, `volume_down`.                               |
-| Rotate                 | `ORCA emulator rotate landscape_left --json`                          | Drives `Emulator -instance <name> -rotation`.                                                 |
-| Install a HAP          | `ORCA emulator install ./entry-default-signed.hap --reinstall --json` | `--reinstall` passes `-r`.                                                                    |
-| Launch an ability      | `ORCA emulator launch com.acme.app --activity EntryAbility --json`    | Omit `--activity` to launch the default `EntryAbility`.                                       |
-| Accessibility tree     | `ORCA emulator ax --json`                                             | `uitest dumpLayout` parsed to a node tree, frames 0..1, capped at 500 nodes.                  |
-| Raw hdc shell          | `ORCA emulator exec --command "bm dump -n com.acme.app" --json`       | Runs `hdc -t <connectKey> shell <command>`.                                                   |
-| Stop the helper        | `ORCA emulator kill --json`                                           | Leaves the target booted.                                                                     |
-| Stop and power off     | `ORCA emulator shutdown --json`                                       | Stops the helper and runs `Emulator -stop <name>`.                                            |
+| Goal                   | Command                                                               | Constraint                                                                                |
+| ---------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| List instances/targets | `ORCA emulator devices --json`                                        | Every backend's devices with a platform column, booted and shutdown.                      |
+| Attach / make active   | `ORCA emulator attach "Mate 90 Pro" --json`                           | Given a shutdown instance name, boots it first. Makes the target active for the worktree. |
+| Single tap             | `ORCA emulator tap <x> <y> --json`                                    | Normalized 0..1 coordinates.                                                              |
+| Swipe / gesture        | `ORCA emulator gesture '<json>' --json`                               | Sent through `uinput` between the first and last points.                                  |
+| Type text              | `ORCA emulator type "user@example.com" --json`                        | US-ASCII, needs a focused input field.                                                    |
+| Hardware button        | `ORCA emulator button back --json`                                    | `home`, `back`, `recents`, `power`, `volume_up`, `volume_down`.                           |
+| Rotate                 | `ORCA emulator rotate landscape_left --json`                          | Drives `Emulator -instance <name> -rotation`.                                             |
+| Install a HAP          | `ORCA emulator install ./entry-default-signed.hap --reinstall --json` | `--reinstall` passes `-r`.                                                                |
+| Launch an ability      | `ORCA emulator launch com.acme.app --activity EntryAbility --json`    | Omit `--activity` to launch the default `EntryAbility`.                                   |
+| Accessibility tree     | `ORCA emulator ax --json`                                             | `uitest dumpLayout` parsed to a node tree, frames 0..1, capped at 500 nodes.              |
+| Raw hdc shell          | `ORCA emulator exec --command "bm dump -n com.acme.app" --json`       | Runs `hdc -t <connectKey> shell <command>`.                                               |
+| Stop the helper        | `ORCA emulator kill --json`                                           | Leaves the target booted.                                                                 |
+| Stop and power off     | `ORCA emulator shutdown --json`                                       | Stops the helper and runs `Emulator -stop <name>`.                                        |
 
 ## Targeting
 
