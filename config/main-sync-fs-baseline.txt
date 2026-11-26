@@ -222,7 +222,7 @@
 3 src/main/dsh/hook-service.ts
 1 src/main/emulator/android/android-sdk-host-discovery.ts
 7 src/main/emulator/android/scrcpy-server-download.ts
-1 src/main/emulator/emulator-probe.ts
+1 src/main/emulator/harmony/harmony-sdk-host-discovery.ts # sync exists() probe required by the sync EmulatorBackend.isSupportedOnHost() contract; mirrors android-sdk-host-discovery; the pure resolver takes exists as an injected parameter
 2 src/main/emulator/serve-sim-detached-session.ts
 7 src/main/emulator/serve-sim-execution.ts
 17 src/main/emulator/serve-sim-runtime-materializer.ts

@@ -68,32 +68,48 @@
     {
       "name": "orca-emulator",
       "sourcePath": "skills/orca-emulator",
-      "packageDigest": "b7140a10585c46f008fcbd0210fd18d56a16aa0e85012e4406689f7c2bb74aa8",
+      "packageDigest": "0e353b986cf8e4bd06a50531f5315106077b0011b69ec702a1c340ad95c69021",
       "files": [
         {
           "path": "SKILL.md",
-          "size": 3474,
+          "size": 3522,
           "executable": false,
           "classification": "text",
-          "exactSha256": "3b39f6274c7db997916808a1ed7377fc004da539819e406fcf14b275fbb33679",
-          "textNormalizedSha256": "3b39f6274c7db997916808a1ed7377fc004da539819e406fcf14b275fbb33679",
-          "identitySha256": "3b39f6274c7db997916808a1ed7377fc004da539819e406fcf14b275fbb33679"
+          "exactSha256": "667827de8575f5d3733fc7e1fcdffd17aca07e704f66551ef38a9292f4ca5571",
+          "textNormalizedSha256": "667827de8575f5d3733fc7e1fcdffd17aca07e704f66551ef38a9292f4ca5571",
+          "identitySha256": "667827de8575f5d3733fc7e1fcdffd17aca07e704f66551ef38a9292f4ca5571"
         }
       ]
     },
     {
       "name": "orca-emulator-android",
       "sourcePath": "skills/orca-emulator-android",
-      "packageDigest": "08114d418f649414c152899e072827b6cf11ee402b74b9dcc41066314c8685b6",
+      "packageDigest": "27dd379a57f506bdd822e828010fc73e080a633f5273c41fdd8d6576ea4deefd",
       "files": [
         {
           "path": "SKILL.md",
-          "size": 3371,
+          "size": 3417,
           "executable": false,
           "classification": "text",
-          "exactSha256": "24a0898faa202c0179f7f9ed6c514561d50e7c9cd2d2e487de821fa492ba651e",
-          "textNormalizedSha256": "24a0898faa202c0179f7f9ed6c514561d50e7c9cd2d2e487de821fa492ba651e",
-          "identitySha256": "24a0898faa202c0179f7f9ed6c514561d50e7c9cd2d2e487de821fa492ba651e"
+          "exactSha256": "e8a4b463fe7bbb5f945081d937c22837ff31e4376233087a419e3164c4a9873f",
+          "textNormalizedSha256": "e8a4b463fe7bbb5f945081d937c22837ff31e4376233087a419e3164c4a9873f",
+          "identitySha256": "e8a4b463fe7bbb5f945081d937c22837ff31e4376233087a419e3164c4a9873f"
+        }
+      ]
+    },
+    {
+      "name": "orca-emulator-harmonyos",
+      "sourcePath": "skills/orca-emulator-harmonyos",
+      "packageDigest": "0b1495d6dbad9eb47c68640557cb17b86f6b9fd9215a4eafd7c1c6759aa7fc2e",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 3449,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "bc15731747f2fc0e3aba2ed88329f51488abb6694ee73a6ce8159444469b14b7",
+          "textNormalizedSha256": "bc15731747f2fc0e3aba2ed88329f51488abb6694ee73a6ce8159444469b14b7",
+          "identitySha256": "bc15731747f2fc0e3aba2ed88329f51488abb6694ee73a6ce8159444469b14b7"
         }
       ]
     },

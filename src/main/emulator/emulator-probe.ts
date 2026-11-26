@@ -1,4 +1,4 @@
-import { appendFileSync } from 'node:fs'
+import { appendFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -26,11 +26,9 @@ function format(level: string, event: string, data?: unknown): string {
 }
 
 function append(text: string): void {
-  try {
-    appendFileSync(EMULATOR_PROBE_LOG, `${text}\n`)
-  } catch {
-    // Best-effort: never let logging break the feature.
-  }
+  // Fire-and-forget so the sync probe API never blocks the event loop on disk; O_APPEND keeps
+  // each best-effort write atomic and ordered.
+  void appendFile(EMULATOR_PROBE_LOG, `${text}\n`).catch(() => {})
 }
 
 export function emulatorProbe(event: string, data?: unknown): void {
