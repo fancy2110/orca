@@ -50,8 +50,11 @@ describe('startHarmonyStreamSession', () => {
     })
     expect(info.streamUrl).toMatch(/^http:\/\/127\.0\.0\.1:\d+\/stream\.mjpeg$/)
 
+    // Fake timers drive the capture loop; real loopback delivery and file reads still run.
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] })
     const chunks: Buffer[] = []
-    await new Promise<void>((resolve, reject) => {
+    let settled = false
+    const frameArrived = new Promise<void>((resolve, reject) => {
       const req = http.get(info.streamUrl, (res) => {
         res.on('data', (chunk: Buffer) => {
           chunks.push(chunk)
@@ -68,10 +71,27 @@ describe('startHarmonyStreamSession', () => {
         reject(new Error('no frame received'))
       }, 2000)
     })
+    void frameArrived.then(
+      () => {
+        settled = true
+      },
+      () => {
+        settled = true
+      }
+    )
 
-    expect(Buffer.concat(chunks).includes('--orca-harmony-frame')).toBe(true)
-    handle.close()
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    try {
+      for (let elapsed = 0; elapsed < 2000 && !settled; elapsed += 15) {
+        await vi.advanceTimersByTimeAsync(15)
+      }
+      await frameArrived
+
+      expect(Buffer.concat(chunks).includes('--orca-harmony-frame')).toBe(true)
+      handle.close()
+      await vi.advanceTimersByTimeAsync(50)
+    } finally {
+      vi.useRealTimers()
+    }
     await rm(local, { force: true })
   })
 })
