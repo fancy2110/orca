@@ -20,7 +20,7 @@ export type HarmonyEmulatorBackendOptions = {
   // Inject resolved toolchain (tests); undefined auto-discovers, null means none.
   sdk?: HarmonySdkPaths | null
   deployedRoots?: readonly string[]
-  listDirectory?: (dir: string) => string[]
+  listDirectory?: (dir: string) => Promise<string[]>
   bootTimeoutMs?: number
   pollIntervalMs?: number
   frameIntervalMs?: number

@@ -31,8 +31,8 @@ afterEach(() => {
 })
 
 describe('writeHarmonyLaunchDiagnostic', () => {
-  it('writes a timestamped file named after the sanitized instance', () => {
-    const path = writeHarmonyLaunchDiagnostic(failure(), at)
+  it('writes a timestamped file named after the sanitized instance', async () => {
+    const path = await writeHarmonyLaunchDiagnostic(failure(), at)
     const expected = join(tmpdir(), 'orca-harmony-launch-Mate-90-Pro-2026-11-26T09-30-05-123Z.log')
     expect(path).toBe(expected)
     if (!path) {
@@ -44,8 +44,8 @@ describe('writeHarmonyLaunchDiagnostic', () => {
     expect(recorded).toBe(path)
   })
 
-  it('records the argv, reason and emulator stderr in the file body', () => {
-    const path = writeHarmonyLaunchDiagnostic(
+  it('records the argv, reason and emulator stderr in the file body', async () => {
+    const path = await writeHarmonyLaunchDiagnostic(
       failure({ diagnostics: 'emulator reports isRunning=false; hdc sees no targets visible' }),
       at
     )
@@ -60,7 +60,9 @@ describe('writeHarmonyLaunchDiagnostic', () => {
     expect(body).toContain('hdc sees no targets visible')
   })
 
-  it('never throws on a bad clock and still returns null', () => {
-    expect(writeHarmonyLaunchDiagnostic(failure(), new Date('not a date'))).toBeNull()
+  it('never throws on a bad clock and still returns null', async () => {
+    await expect(
+      writeHarmonyLaunchDiagnostic(failure(), new Date('not a date'))
+    ).resolves.toBeNull()
   })
 })

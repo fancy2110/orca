@@ -1,6 +1,6 @@
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { writeFileSync } from 'node:fs'
+import { writeFile } from 'node:fs/promises'
 import { EmulatorError } from '../emulator-errors'
 import type { HarmonyCommandRunner } from './harmony-command-runner'
 import type { HarmonySdkPaths } from './harmony-sdk-discovery'
@@ -22,7 +22,9 @@ export type HarmonyLaunchFailure = {
   diagnostics?: string
 }
 
-export type HarmonyLaunchDiagnosticWriter = (failure: HarmonyLaunchFailure) => string | null
+export type HarmonyLaunchDiagnosticWriter = (
+  failure: HarmonyLaunchFailure
+) => Promise<string | null>
 
 // Timeout diagnostics must not themselves hang the error path for the full 60s runner default.
 const DIAGNOSTIC_COMMAND_TIMEOUT_MS = 10_000
@@ -37,10 +39,10 @@ export function launchDiagnosticPath(instanceName: string, at: Date): string {
 
 // Unconditional on failure (the probe log is opt-in); best-effort so logging never masks the
 // boot error. Returns the path so the EmulatorError can point the user at it.
-export function writeHarmonyLaunchDiagnostic(
+export async function writeHarmonyLaunchDiagnostic(
   failure: HarmonyLaunchFailure,
   at: Date = new Date()
-): string | null {
+): Promise<string | null> {
   try {
     const path = launchDiagnosticPath(failure.instanceName, at)
     const body = [
@@ -60,18 +62,18 @@ export function writeHarmonyLaunchDiagnostic(
       failure.stderr || '(empty)',
       ''
     ].join('\n')
-    writeFileSync(path, body)
+    await writeFile(path, body)
     return path
   } catch {
     return null
   }
 }
 
-export function launchFailureError(
+export async function launchFailureError(
   writer: HarmonyLaunchDiagnosticWriter,
   failure: HarmonyLaunchFailure
-): EmulatorError {
-  const path = writer(failure)
+): Promise<EmulatorError> {
+  const path = await writer(failure)
   const detail =
     (failure.stderr || failure.stdout).trim() ||
     `exited with code ${failure.code ?? 'null'}${failure.signal ? ` (signal ${failure.signal})` : ''}`
@@ -122,7 +124,7 @@ export async function bootTimeoutError(
   const state = await describeBootState(runner, sdk, instance)
   const requestedPort = requestedKey?.split(':')[1]
   const requested = requestedPort ? `Requested hdc port ${requestedPort}. ` : ''
-  const path = writer({
+  const path = await writer({
     instanceName: instance.name,
     argv,
     reason: 'hdc target did not connect before the boot timeout',

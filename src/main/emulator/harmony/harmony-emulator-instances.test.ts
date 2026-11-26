@@ -83,7 +83,7 @@ describe('listHarmonyEmulatorInstances', () => {
   const deployedRoot = '/home/erik/.Huawei/Emulator/deployed'
   const io = {
     deployedRoots: [deployedRoot],
-    listDirectory: vi.fn(() => [])
+    listDirectory: vi.fn(async () => [])
   }
 
   it('returns parsed details on success', async () => {
@@ -97,7 +97,7 @@ describe('listHarmonyEmulatorInstances', () => {
     const runner: HarmonyCommandRunner = async () => ({ stdout: DETAILS, stderr: '', code: 0 })
     const dirIO = {
       deployedRoots: [deployedRoot],
-      listDirectory: vi.fn(() => ['Mate 90 Pro', 'Local Extra'])
+      listDirectory: vi.fn(async () => ['Mate 90 Pro', 'Local Extra'])
     }
     const instances = await listHarmonyEmulatorInstances(runner, SDK, dirIO)
     expect(instances.map((instance) => instance.name)).toEqual([
@@ -116,7 +116,7 @@ describe('listHarmonyEmulatorInstances', () => {
     }))
     const dirIO = {
       deployedRoots: [deployedRoot],
-      listDirectory: vi.fn(() => ['Mate 90 Pro'])
+      listDirectory: vi.fn(async () => ['Mate 90 Pro'])
     }
     const instances = await listHarmonyEmulatorInstances(runner, SDK, dirIO)
     expect(instances).toEqual([
@@ -137,7 +137,7 @@ describe('listHarmonyEmulatorInstances', () => {
     }))
     const dirIO = {
       deployedRoots: [deployedRoot],
-      listDirectory: vi.fn(() => [])
+      listDirectory: vi.fn(async () => [])
     }
     const instances = await listHarmonyEmulatorInstances(runner, SDK, dirIO)
     expect(instances[0]?.instancePath).toBe('')

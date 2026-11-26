@@ -70,7 +70,7 @@ export function parseInstanceNames(stdout: string): string[] {
 
 export type InstanceDirectoryIO = {
   deployedRoots: readonly string[]
-  listDirectory: (dir: string) => string[]
+  listDirectory: (dir: string) => Promise<string[]>
 }
 
 // Lists deployed instances via the Emulator binary (details JSON, then plain
@@ -91,24 +91,26 @@ export async function listHarmonyEmulatorInstances(
   const namesResult = await runner(sdk.emulator, listNamesArgs)
   const named = namesResult.code === 0 ? parseInstanceNames(namesResult.stdout) : []
   return withDirectoryFallbacks(
-    named.map((name) => ({
-      name,
-      instancePath: firstExistingPath(io, name) ?? '',
-      imageRoot: '',
-      isRunning: false
-    })),
+    await Promise.all(
+      named.map(async (name) => ({
+        name,
+        instancePath: (await firstExistingPath(io, name)) ?? '',
+        imageRoot: '',
+        isRunning: false
+      }))
+    ),
     io
   )
 }
 
-function withDirectoryFallbacks(
+async function withDirectoryFallbacks(
   instances: HarmonyEmulatorInstance[],
   io: InstanceDirectoryIO
-): HarmonyEmulatorInstance[] {
+): Promise<HarmonyEmulatorInstance[]> {
   const known = new Set(instances.map((instance) => instance.name))
   const merged = [...instances]
   for (const root of io.deployedRoots) {
-    for (const name of io.listDirectory(root)) {
+    for (const name of await io.listDirectory(root)) {
       if (!known.has(name)) {
         known.add(name)
         merged.push({
@@ -123,9 +125,9 @@ function withDirectoryFallbacks(
   return merged
 }
 
-function firstExistingPath(io: InstanceDirectoryIO, name: string): string | null {
+async function firstExistingPath(io: InstanceDirectoryIO, name: string): Promise<string | null> {
   for (const root of io.deployedRoots) {
-    if (io.listDirectory(root).includes(name)) {
+    if ((await io.listDirectory(root)).includes(name)) {
       return join(root, name)
     }
   }

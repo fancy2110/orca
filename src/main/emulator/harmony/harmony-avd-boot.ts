@@ -216,7 +216,7 @@ export async function bootHarmonyDevice(
     launch = launchInstance(sdk.emulator, argv)
   } catch (error) {
     reservedPorts.delete(port)
-    throw launchFailureError(options.writeLaunchDiagnostic ?? writeHarmonyLaunchDiagnostic, {
+    throw await launchFailureError(options.writeLaunchDiagnostic ?? writeHarmonyLaunchDiagnostic, {
       instanceName: instance.name,
       argv,
       reason: 'could not start',
@@ -265,7 +265,7 @@ async function waitForConnectKey(
           stdout: exit.stdout,
           stderr: exit.stderr
         }
-        throw launchFailureError(writer, failure)
+        throw await launchFailureError(writer, failure)
       }
     }
     // Wake immediately when the process dies instead of sleeping the full poll interval.

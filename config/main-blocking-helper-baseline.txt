@@ -469,15 +469,12 @@
 2 src/main/droid/droid-hook-config-files.ts # hooks.json, or legacy hooks/hooks.json while it is absent, is read on the same one-shot startup install, toggle, status and uninstall paths as settings.json
 6 src/main/droid/hook-service.ts
 11 src/main/dsh/hook-service.ts
-2 src/main/emulator/android/android-avd-boot.ts
-2 src/main/emulator/android/android-command-runner.ts
 1 src/main/emulator/android/android-sdk-host-discovery.ts
 1 src/main/emulator/android/android-sdk-state.ts
-5 src/main/emulator/android/scrcpy-server-download.ts
-10 src/main/emulator/android/scrcpy-stream-session.ts
-3 src/main/emulator/backends/android-emulator-backend.ts
+2 src/main/emulator/android/scrcpy-server-download.ts
+1 src/main/emulator/backends/android-emulator-backend.ts
 4 src/main/emulator/backends/ios-emulator-backend.ts
-2 src/main/emulator/emulator-probe.ts
+1 src/main/emulator/harmony/harmony-sdk-state.ts # resolve() stays sync for the EmulatorBackend.isSupportedOnHost() contract; reaches existsSync in harmony-sdk-host-discovery; mirrors android-sdk-state
 4 src/main/emulator/serve-sim-execution.ts
 9 src/main/emulator/serve-sim-runtime-materializer.ts
 1 src/main/emulator/simctl-simulator-devices.ts
@@ -578,7 +575,6 @@
 2 src/main/ipc/computer-use-permissions.ts
 2 src/main/ipc/custom-app-icon.ts
 22 src/main/ipc/diagnostics.ts
-1 src/main/ipc/emulator/emulator-video-stream.ts
 6 src/main/ipc/ephemeral-vm/ephemeral-vm-recipe-context.ts
 7 src/main/ipc/ephemeral-vm/ephemeral-vm-runtime-handlers.ts
 11 src/main/ipc/ephemeral-vm/ephemeral-vm.ts
@@ -643,7 +639,7 @@
 1 src/main/ipc/pty/runtime/spawn-options.ts
 1 src/main/ipc/pty/spawn/spawn-begin.ts
 1 src/main/ipc/pty/spawn/spawn-options-assembly.ts
-17 src/main/ipc/register-core-handlers/register-core-handlers.ts # clipboard path authorization moved here from window/clipboard/clipboard-ipc-handlers.ts
+16 src/main/ipc/register-core-handlers/register-core-handlers.ts # clipboard path authorization moved here from window/clipboard/clipboard-ipc-handlers.ts
 1 src/main/ipc/register-core-handlers/runtime-host-handler-registration.ts
 5 src/main/ipc/repos.ts
 1 src/main/ipc/repos/local-repo-registration.ts
@@ -1213,7 +1209,6 @@
 2 src/main/runtime/repositories/runtime-repository-issue-command.ts
 2 src/main/runtime/repositories/runtime-repository-registration-controller.ts
 1 src/main/runtime/repositories/runtime-repository-settings-controller.ts
-2 src/main/runtime/rpc/dispatcher.ts
 3 src/main/runtime/rpc/methods/accounts/usage-credentials.ts
 2 src/main/runtime/rpc/methods/bots-tools-owned-sign-in.ts
 12 src/main/runtime/rpc/methods/bots-tools.ts # +1 botOwnTool now reads the credential store in its own file; it always did, through botToolSignInState

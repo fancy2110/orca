@@ -29,7 +29,7 @@ const options: HarmonyBootOptions = {
   pollIntervalMs: 100,
   sleep: vi.fn(macrotaskSleep),
   // Keep timeout tests from writing real diagnostic files; tests that assert on failures inject their own.
-  writeLaunchDiagnostic: vi.fn(() => null)
+  writeLaunchDiagnostic: vi.fn(async () => null)
 }
 
 function instance(overrides: Partial<HarmonyEmulatorInstance> = {}): HarmonyEmulatorInstance {
@@ -77,7 +77,7 @@ const nextTick = (): Promise<void> => new Promise((resolve) => setImmediate(reso
 function diagnostic(
   calls: HarmonyLaunchFailure[] = []
 ): NonNullable<HarmonyBootOptions['writeLaunchDiagnostic']> {
-  return vi.fn((failure: HarmonyLaunchFailure) => {
+  return vi.fn(async (failure: HarmonyLaunchFailure) => {
     calls.push(failure)
     return '/tmp/orca-fake-launch-diagnostic.log'
   })

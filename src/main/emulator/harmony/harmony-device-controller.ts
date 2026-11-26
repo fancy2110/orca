@@ -41,7 +41,7 @@ export type HarmonyDeviceControllerOptions = {
   // Inject resolved toolchain (tests); undefined auto-discovers, null means none.
   sdk?: HarmonySdkPaths | null
   deployedRoots?: readonly string[]
-  listDirectory?: (dir: string) => string[]
+  listDirectory?: (dir: string) => Promise<string[]>
   bootTimeoutMs?: number
   pollIntervalMs?: number
   sleep?: (ms: number) => Promise<void>
@@ -58,7 +58,7 @@ export class HarmonyDeviceController {
   private readonly runner: HarmonyCommandRunner
   private readonly sdkState: HarmonySdkState
   private readonly deployedRoots: readonly string[]
-  private readonly listDirectory: (dir: string) => string[]
+  private readonly listDirectory: (dir: string) => Promise<string[]>
   private readonly bootTimeoutMs: number
   private readonly pollIntervalMs: number
   private readonly sleep: (ms: number) => Promise<void>
